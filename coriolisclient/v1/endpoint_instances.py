@@ -13,19 +13,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import collections
+
 from six.moves.urllib import parse as urlparse
 
 from coriolisclient import base
 
 
 class EndpointInstance(base.Resource):
-    @property
-    def flavor_name(self):
-        return self._info.get("flavor_name")
+    attribute_mapping = collections.OrderedDict([
+        ("id", "Instance ID"),
+        ("name", "Instance Name"),
+        ("memory_mb", "Instance Memory (MB)"),
+        ("num_cpu", "Cores"),
+        ("num_cores_per_socket", "Cores per socket"),
+        ("os_type", "OS Type")
+    ])
 
     @property
-    def firmware_type(self):
-        return self._info.get("firmware_type")
+    def id(self):
+        return self._info.get("id")
+
+    @property
+    def name(self):
+        return self._info.get("name")
+
+    @property
+    def memory_mb(self):
+        return self._info.get("memory_mb")
+
+    @property
+    def num_cpu(self):
+        return self._info.get("num_cpu")
+
+    @property
+    def os_type(self):
+        return self._info.get("os_type")
 
 
 class EndpointInstanceManager(base.BaseManager):
